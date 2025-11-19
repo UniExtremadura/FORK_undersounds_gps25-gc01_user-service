@@ -32,7 +32,7 @@ import org.springframework.web.multipart.MultipartFile
 interface UserControllerSpec {
     @Operation(
         summary = "Crea un nuevo usuario",
-        description = "Permite a un usuario autenticado crear un álbum subiendo metadatos y una portada. Devuelve el álbum completo con información del artista y canciones."
+        description = "Permite crear una cuenta para acceder a la plataforma de UnderSounds. El endpoint retorna las credenciales de acceso que pueden ser usadas para realizar peticiones."
     )
     @ApiResponses(
         value = [
@@ -122,7 +122,7 @@ interface UserControllerSpec {
 
     @Operation(
         summary = "Elimina un usuario",
-        description = "Elimina el usuario autenticado de la plataforma. Esta acción ES IRREVERSIBLE."
+        description = "Elimina el usuario autenticado de la plataforma. El usuario NO puede ser un artista, en caso de querer inhabilitar el perfil de artista se debe acceder al endpoint de artistas. Esta acción ES IRREVERSIBLE."
     )
     @ApiResponses(value = [ApiResponse(responseCode = "200", description = "Usuario actualizado correctamente")])
     @DeleteMapping

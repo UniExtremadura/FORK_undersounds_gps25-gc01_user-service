@@ -120,8 +120,9 @@ interface ArtistControllerSpec  {
     ): ResponseEntity<SuccessDTO<ArtistDTO>>
 
     @Operation(
-        summary = "Borra un artista",
-        description = "Borra toda la información de un artista. Pero no sus canciones y albumes. E"
+        summary = "Inhabilita un artista",
+        description = "Inhabilita el perfil de un artista pero NO borra su información. Cuando creas un perfil de artista con UnderSounds aceptas que tu información se mantenga en la plataforma para poder proveerla con el contenido que los usuarios compran." +
+                " Tras inhabilitar un artista no podrás acceder a tu cuenta."
     )
     @ApiResponses(value = [ApiResponse(responseCode = "200", description = "Artistas obtenidos correctamente")])
     @PreAuthorize("hasRole('artist')")
