@@ -1,8 +1,11 @@
 package es.undersounds.gc01.users.dtos.artists
 
-data class UpdateArtistDTO(
-    val name: String,
-    val bio: String,
-    val artisticName: String,
-    val iban: String
-)
+import es.undersounds.gc01.users.dtos.users.UpdateUserDTO
+
+open class UpdateArtistDTO(
+    firstName: String?,
+    lastName: String?,
+    bio: String?,
+    val artisticName: String?,
+    val iban: String?
+): UpdateUserDTO(firstName, lastName, bio)

@@ -4,7 +4,6 @@ import jakarta.persistence.*
 import java.util.UUID
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 class User(
     @Column(unique = true, nullable = false, updatable = false)
     var publicId: UUID? = null,
@@ -13,7 +12,13 @@ class User(
     var username: String,
 
     @Column(nullable = false)
-    var name: String,
+    var firstName: String,
+
+    @Column(nullable = false)
+    var lastName: String,
+
+    @Column(nullable = false)
+    var email: String,
 
     @Column(nullable = false, length = 1000)
     var bio: String,

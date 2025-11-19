@@ -5,7 +5,10 @@ import io.swagger.v3.oas.annotations.media.Schema
 @Schema(description = "Información pública de un usuario. El campo `id` se toma del JWT proporcionado por Keycloak.")
 data class UserDTO(
     @field:Schema(description = "Nombre real del usuario", example = "Juan Pérez")
-    val name: String,
+    val firstName: String,
+
+    @field:Schema(description = "Apellidos reales del usuario", example = "Juan Pérez")
+    val lastName: String,
 
     @field:Schema(description = "Nombre de usuario único", example = "juanperez")
     val username: String,

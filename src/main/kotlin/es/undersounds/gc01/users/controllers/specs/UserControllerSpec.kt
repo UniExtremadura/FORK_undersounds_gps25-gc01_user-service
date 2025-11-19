@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.multipart.MultipartFile
 
@@ -43,14 +44,14 @@ interface UserControllerSpec {
             )
         ]
     )
-    @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     @PreAuthorize("hasRole('internal_service')")
+    @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun registerUser(
-        @Parameter(description = "Datos del usuario a crear")
-        @Valid newUser: CreateUserDTO,
+        @Parameter(description = "Datos del usuario a crear") @Valid
+        @RequestPart("create-user-info") newUser: CreateUserDTO,
 
         @Parameter(description = "Foto de perfil del usuario")
-        @RequestPart("pfp") pfp: MultipartFile
+        @RequestPart("profile-picture") pfp: MultipartFile
     ): ResponseEntity<SuccessDTO<UserCredentialsDTO>>
 
     @Operation(
@@ -67,11 +68,11 @@ interface UserControllerSpec {
             )
         ]
     )
-    @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE], value = ["/login"])
     @PreAuthorize("hasRole('internal_service')")
+    @PostMapping("login", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun loginUser(
         @Parameter(description = "Datos del usuario a loguear")
-        @Valid @RequestPart("data") user: LoginUserDTO
+        @Valid @RequestPart("login-user-info") user: LoginUserDTO
     ): ResponseEntity<SuccessDTO<UserCredentialsDTO>>
 
     @Operation(
@@ -108,33 +109,22 @@ interface UserControllerSpec {
             )
         ]
     )
-    @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    @PutMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun updateUser(
         @AuthenticationPrincipal user: AuthenticatedUser,
 
-        @Parameter(description = "Datos del usuario a loguear")
-        @Valid userUpdate: UpdateUserDTO,
+        @Parameter(description = "Datos del usuario a actualizar")
+        @RequestPart("update-user-info") @Valid userUpdate: UpdateUserDTO,
 
         @Parameter(description = "Foto de perfil del usuario (opcional)")
-        @RequestPart("pfp", required = false) pfp: MultipartFile?
-    ): ResponseEntity<SuccessDTO<UserCredentialsDTO>>
+        @RequestPart("profile-picture", required = false) pfp: MultipartFile?
+    ): ResponseEntity<SuccessDTO<UserDTO>>
 
     @Operation(
         summary = "Elimina un usuario",
-        description = "Elimina el usuario autenticado de la plataforma. Esta acción es irreversible."
+        description = "Elimina el usuario autenticado de la plataforma. Esta acción ES IRREVERSIBLE."
     )
-    @ApiResponses(
-        value = [
-            ApiResponse(responseCode = "200", description = "Usuario actualizado correctamente"),
-            ApiResponse(
-                responseCode = "400",
-                description = "Error en los datos enviados",
-                content = [Content(schema = Schema(implementation = ErrorDTO::class))]
-            )
-        ]
-    )
+    @ApiResponses(value = [ApiResponse(responseCode = "200", description = "Usuario actualizado correctamente")])
     @DeleteMapping
-    fun deleteUser(
-        @AuthenticationPrincipal user: AuthenticatedUser
-    ): ResponseEntity<SuccessDTO<Unit>>
+    fun deleteUser(@AuthenticationPrincipal user: AuthenticatedUser): ResponseEntity<SuccessDTO<Unit>>
 }

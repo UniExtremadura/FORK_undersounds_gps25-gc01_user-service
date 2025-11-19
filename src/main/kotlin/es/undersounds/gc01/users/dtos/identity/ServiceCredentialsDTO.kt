@@ -1,13 +1,10 @@
-package es.undersounds.gc01.users.dtos.users
+package es.undersounds.gc01.users.dtos.identity
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class UserCredentialsDTO(
+data class ServiceCredentialsDTO(
     @field:JsonProperty("access_token")
     val accessToken: String,
-
-    @field:JsonProperty("refresh_token")
-    val refreshToken: String,
 
     @field:JsonProperty("expires_in")
     val expiresIn: Long,

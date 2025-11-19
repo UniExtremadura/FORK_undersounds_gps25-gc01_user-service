@@ -45,6 +45,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.slf4j:slf4j-api:2.0.9")
     runtimeOnly("ch.qos.logback:logback-classic:1.5.13")
+
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+    // UTIL
+    implementation("commons-io:commons-io:2.14.0")
 }
 
 kotlin {

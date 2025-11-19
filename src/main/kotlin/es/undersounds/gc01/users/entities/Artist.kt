@@ -1,17 +1,24 @@
 package es.undersounds.gc01.users.entities
 
 import jakarta.persistence.*
-import java.util.UUID
 
+@Entity
 class Artist(
-    publicId: UUID,
-    username: String,
-    name: String,
-    bio: String,
+    @OneToOne
+    @PrimaryKeyJoinColumn(name="id")
+    var user: User,
 
     @Column(nullable = false)
     var artisticName: String,
 
     @Column(nullable = false)
-    var  iban: String
-) : User( publicId, username, name, bio)
+    var  iban: String,
+    
+    @Column(nullable = false)
+    var deleted: Boolean  = false
+) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false, nullable = false)
+    var id: Long? = null
+}

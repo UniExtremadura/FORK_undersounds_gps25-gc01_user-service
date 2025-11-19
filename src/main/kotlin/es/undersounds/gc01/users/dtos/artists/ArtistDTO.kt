@@ -8,8 +8,11 @@ data class ArtistDTO (
     @field:Schema(description = "Identificador único del artista", example = "123e4567-e89b-12d3-a456-426614174000")
     val id: UUID,
 
-    @field:Schema(description = "Nombre real del artista", example = "Kanye Omari West")
-    val name: String,
+    @field:Schema(description = "Nombre real del artista", example = "Kanye")
+    val firstName: String,
+
+    @field:Schema(description = "Apellidos reales del artista", example = "Omari West")
+    val lastName: String,
 
     @field:Schema(description = "Nombre artistico del artista", example = "Kanye West")
     val artisticName: String,
