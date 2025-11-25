@@ -5,6 +5,7 @@ import es.undersounds.gc01.users.dtos.artists.ArtistDTO
 import es.undersounds.gc01.users.dtos.artists.ArtistFilters
 import es.undersounds.gc01.users.dtos.artists.CreateArtistDTO
 import es.undersounds.gc01.users.dtos.artists.UpdateArtistDTO
+import es.undersounds.gc01.users.dtos.users.UserCredentialsDTO
 import es.undersounds.gc01.users.entities.Artist
 import es.undersounds.gc01.users.exceptions.BadRequestException
 import es.undersounds.gc01.users.exceptions.ForbiddenException
@@ -28,7 +29,7 @@ class ArtistService(
     private val artistRepository: ArtistRepository
 ) {
     @Transactional
-    fun postArtist(user: AuthenticatedUser, artistInfo: CreateArtistDTO): ArtistDTO{
+    fun postArtist(user: AuthenticatedUser, artistInfo: CreateArtistDTO): ArtistDTO {
         val userEntity = userRepository.findUserByPublicId(user.id)
             ?: throw ForbiddenException("No estás autorizado a crear una cuenta de artista")
 
@@ -45,11 +46,11 @@ class ArtistService(
             iban = artistInfo.iban
         )
 
-        val saved = artistRepository.save(artist)
+        artistRepository.save(artist)
         identityClient.giveRolArtistToUser(user.id)
-        val dto = saved.toDTO()
+        identityClient.logout(user.id)
 
-        return dto
+        return artist.toDTO()
     }
 
     fun getArtistByUsername(username: String): ArtistDTO {
@@ -74,7 +75,7 @@ class ArtistService(
 
     fun updateArtist(user: AuthenticatedUser, artistUpdate: UpdateArtistDTO, pfp: MultipartFile?): ArtistDTO {
         val artist = artistRepository.findArtistByUserPublicId(user.id)
-            ?: throw NotFoundException("No se ha encontrado ningun artista con el UD ${user.id}")
+            ?: throw NotFoundException("No se ha encontrado ningun artista con el ID ${user.id}")
 
         userService.updateUser(user, artistUpdate, pfp)
 

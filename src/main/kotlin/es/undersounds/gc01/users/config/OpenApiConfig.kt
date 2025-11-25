@@ -1,6 +1,6 @@
 package es.undersounds.gc01.users.config
 
-import es.undersounds.gc01.content.dtos.ErrorDTO
+import es.undersounds.gc01.users.dtos.ErrorDTO
 import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.media.MediaType
 import io.swagger.v3.oas.models.media.Schema
