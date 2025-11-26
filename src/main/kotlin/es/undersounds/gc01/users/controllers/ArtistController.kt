@@ -1,6 +1,6 @@
 package es.undersounds.gc01.users.controllers
 
-import es.undersounds.gc01.users.dtos.SuccessDTO
+import es.undersounds.gc01.content.dtos.SuccessDTO
 import es.undersounds.gc01.users.services.ArtistService
 import es.undersounds.gc01.users.controllers.specs.ArtistControllerSpec
 import es.undersounds.gc01.users.dtos.artists.ArtistDTO

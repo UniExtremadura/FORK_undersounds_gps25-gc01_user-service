@@ -112,7 +112,6 @@ class UserService(
         val user = userRepository.findUserByPublicId(user.id)
             ?: throw NotFoundException("No se encontró a ningun usuario con el ID: ${user.id}")
 
-        identityClient.deleteUser(user.publicId!!)
         userMediaService.deletePfp(user)
         userRepository.delete(user)
     }

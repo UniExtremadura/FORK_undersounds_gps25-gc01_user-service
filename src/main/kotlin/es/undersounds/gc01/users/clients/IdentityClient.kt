@@ -92,16 +92,6 @@ class IdentityClient {
         return login(user.username, user.password)
     }
 
-    fun logout(userId: UUID) {
-        serviceToken = getServiceToken()
-        WebClient.create("$baseUrl/admin/realms/$realm/users/$userId/logout")
-            .post()
-            .header("Authorization", "Bearer ${serviceToken.accessToken}")
-            .retrieve()
-            .toBodilessEntity()
-            .block()
-    }
-
     fun giveRolArtistToUser(userId: UUID) {
         serviceToken = getServiceToken()
         WebClient.create("$baseUrl/admin/realms/$realm/users/$userId/role-mappings/realm")

@@ -1,4 +1,4 @@
-package es.undersounds.gc01.users.dtos
+package es.undersounds.gc01.content.dtos
 
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDateTime

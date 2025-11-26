@@ -1,6 +1,6 @@
 package es.undersounds.gc01.users.exceptions
 
-import es.undersounds.gc01.users.dtos.ErrorDTO
+import es.undersounds.gc01.content.dtos.ErrorDTO
 import jakarta.servlet.http.HttpServletRequest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

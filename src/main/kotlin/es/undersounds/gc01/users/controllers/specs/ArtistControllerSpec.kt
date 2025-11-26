@@ -1,12 +1,11 @@
 package es.undersounds.gc01.users.controllers.specs
 
-import es.undersounds.gc01.users.dtos.ErrorDTO
-import es.undersounds.gc01.users.dtos.SuccessDTO
+import es.undersounds.gc01.content.dtos.ErrorDTO
+import es.undersounds.gc01.content.dtos.SuccessDTO
 import es.undersounds.gc01.users.dtos.artists.ArtistDTO
 import es.undersounds.gc01.users.dtos.artists.ArtistFilters
 import es.undersounds.gc01.users.dtos.artists.CreateArtistDTO
 import es.undersounds.gc01.users.dtos.artists.UpdateArtistDTO
-import es.undersounds.gc01.users.dtos.users.UserCredentialsDTO
 import es.undersounds.gc01.users.security.AuthenticatedUser
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter

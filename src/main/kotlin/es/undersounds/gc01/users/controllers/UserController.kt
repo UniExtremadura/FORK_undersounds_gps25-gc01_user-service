@@ -1,6 +1,6 @@
 package es.undersounds.gc01.users.controllers
 
-import es.undersounds.gc01.users.dtos.SuccessDTO
+import es.undersounds.gc01.content.dtos.SuccessDTO
 import es.undersounds.gc01.users.controllers.specs.UserControllerSpec
 import es.undersounds.gc01.users.dtos.users.CreateUserDTO
 import es.undersounds.gc01.users.dtos.users.LoginUserDTO
@@ -76,14 +76,6 @@ class UserController (
     }
 
     override fun deleteUser(user: AuthenticatedUser): ResponseEntity<SuccessDTO<Unit>> {
-        userService.deleteUser(user)
-        return ResponseEntity(
-            SuccessDTO(
-                status = HttpStatus.OK.value(),
-                message = "Usuario eliminado correctamente",
-                data = Unit
-            ),
-            HttpStatus.OK
-        )
+        TODO("Not yet implemented")
     }
 }
