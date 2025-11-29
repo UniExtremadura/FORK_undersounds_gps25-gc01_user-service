@@ -4,6 +4,7 @@ import es.undersounds.gc01.users.dtos.artists.ArtistDTO
 import es.undersounds.gc01.users.dtos.artists.ArtistFilters
 import es.undersounds.gc01.users.entities.Artist
 import es.undersounds.gc01.users.repositories.specs.ArtistSpecs
+import es.undersounds.gc01.users.utils.UserUtils
 import org.springframework.data.jpa.domain.Specification
 
 fun Artist.toDTO(): ArtistDTO {
@@ -14,7 +15,7 @@ fun Artist.toDTO(): ArtistDTO {
         artisticName = this.artisticName,
         username = this.user.username,
         bio = this.user.bio,
-        pfp = this.user.pfp!!
+        pfp = UserUtils.createUserPfpURL(user = this.user)
     )
 }
 

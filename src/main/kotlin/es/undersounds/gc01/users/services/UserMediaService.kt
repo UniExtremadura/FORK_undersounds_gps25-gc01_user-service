@@ -31,7 +31,10 @@ class UserMediaService {
         if(pfp.originalFilename == null)
             throw BadRequestException("Profile picture must have a name")
 
-        val pfpName = createUserPfpName(user, pfp.originalFilename!!)
+        val extension = pfp.contentType?.substringAfterLast('/')?.lowercase()
+            ?: throw BadRequestException("Profile picture must have a valid extension")
+
+        val pfpName = createUserPfpName(user, extension)
 
         user.pfp = pfpName
         val pfpPath: Path = createUserPfpPath(user)

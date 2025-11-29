@@ -13,6 +13,9 @@ data class UserDTO(
     @field:Schema(description = "Nombre de usuario único", example = "juanperez")
     val username: String,
 
+    @field:Schema(description = "Email del usuario", example = "email@email.com")
+    val email: String,
+
     @field:Schema(description = "Biografía del usuario", example = "Desarrollador y amante de la música.")
     val bio: String,
 

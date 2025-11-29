@@ -1,7 +1,7 @@
 package es.undersounds.gc01.users.controllers.specs
 
-import es.undersounds.gc01.content.dtos.ErrorDTO
 import es.undersounds.gc01.content.dtos.SuccessDTO
+import es.undersounds.gc01.content.dtos.ErrorDTO
 import es.undersounds.gc01.users.dtos.users.CreateUserDTO
 import es.undersounds.gc01.users.dtos.users.LoginUserDTO
 import es.undersounds.gc01.users.dtos.users.UpdateUserDTO
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.multipart.MultipartFile
 
@@ -32,7 +33,7 @@ import org.springframework.web.multipart.MultipartFile
 interface UserControllerSpec {
     @Operation(
         summary = "Crea un nuevo usuario",
-        description = "Permite crear una cuenta para acceder a la plataforma de UnderSounds. El endpoint retorna las credenciales de acceso que pueden ser usadas para realizar peticiones."
+        description = "Permite crear una cuenta para acceder a la plataforma de UnderSounds, el usuario debe tener una cuenta previamente en la plataforma"
     )
     @ApiResponses(
         value = [
@@ -44,23 +45,26 @@ interface UserControllerSpec {
             )
         ]
     )
-    @PreAuthorize("hasRole('internal_service')")
+    //@PreAuthorize("hasRole('internal_service')")
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
-    fun registerUser(
+    fun postUser(
+        @AuthenticationPrincipal user: AuthenticatedUser,
+
         @Parameter(description = "Datos del usuario a crear") @Valid
-        @RequestPart("create-user-info") newUser: CreateUserDTO,
+        @RequestPart("create-user-info") dto: CreateUserDTO,
 
         @Parameter(description = "Foto de perfil del usuario")
         @RequestPart("profile-picture") pfp: MultipartFile
-    ): ResponseEntity<SuccessDTO<UserCredentialsDTO>>
+    ): ResponseEntity<SuccessDTO<UserDTO>>
+
 
     @Operation(
-        summary = "Inicia sesión con las credenciales de un usuario",
-        description = "Inicia sesión con las credenciales de un usuario para obtener un token JWT con el que autenticarse en la plataforma"
+        summary = "Obtener un usuario con su token de acceso",
+        description = "Obtiene la información pública de un usuario a partir de su token de acceso"
     )
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "200", description = "Usuario logueado correctamente"),
+            ApiResponse(responseCode = "200", description = "Usuario retornado correctamente"),
             ApiResponse(
                 responseCode = "400",
                 description = "Error en los datos enviados",
@@ -68,12 +72,8 @@ interface UserControllerSpec {
             )
         ]
     )
-    @PreAuthorize("hasRole('internal_service')")
-    @PostMapping("login", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
-    fun loginUser(
-        @Parameter(description = "Datos del usuario a loguear")
-        @Valid @RequestPart("login-user-info") user: LoginUserDTO
-    ): ResponseEntity<SuccessDTO<UserCredentialsDTO>>
+    @GetMapping
+    fun getUser(@AuthenticationPrincipal user: AuthenticatedUser): ResponseEntity<SuccessDTO<UserDTO>>
 
     @Operation(
         summary = "Obtener un usuario por su nombre de usuario",
@@ -90,7 +90,7 @@ interface UserControllerSpec {
         ]
     )
     @GetMapping("/public/{username}")
-    fun getUser(
+    fun getUserByUsername(
         @Parameter(description = "Nombre de usuario del usuario a obtener")
         @PathVariable username: String
     ): ResponseEntity<SuccessDTO<UserDTO>>

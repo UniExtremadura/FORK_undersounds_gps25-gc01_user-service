@@ -20,34 +20,36 @@ import org.springframework.web.multipart.MultipartFile
 class UserController (
     private val userService: UserService
 ) : UserControllerSpec {
-    override fun registerUser(
-        newUser: CreateUserDTO,
-        pfp: MultipartFile
-    ): ResponseEntity<SuccessDTO<UserCredentialsDTO>> {
-        val credentials = userService.registerUser(newUser, pfp)
-        return ResponseEntity(
-            SuccessDTO(
-                status = HttpStatus.CREATED.value(),
-                message = "Usuario registrado correctamente",
-                data = credentials
-            ),
-            HttpStatus.CREATED
-        )
-    }
 
-    override fun loginUser(user: LoginUserDTO): ResponseEntity<SuccessDTO<UserCredentialsDTO>> {
-        val credentials = userService.loginUser(user)
+    override fun postUser(
+        user: AuthenticatedUser,
+        dto: CreateUserDTO,
+        pfp: MultipartFile
+    ): ResponseEntity<SuccessDTO<UserDTO>> {
+        val userDTO = userService.postUser(user, dto, pfp)
         return ResponseEntity(
             SuccessDTO(
                 status = HttpStatus.CREATED.value(),
                 message = "Credenciales obtenidas correctamente",
-                data = credentials
+                data = userDTO
             ),
             HttpStatus.CREATED
         )
     }
 
-    override fun getUser(username: String): ResponseEntity<SuccessDTO<UserDTO>> {
+    override fun getUser(user: AuthenticatedUser): ResponseEntity<SuccessDTO<UserDTO>> {
+        val userDTO = userService.getUser(user)
+        return ResponseEntity(
+            SuccessDTO(
+                status = HttpStatus.OK.value(),
+                message = "Usuario retornado correctamente",
+                data = userDTO
+            ),
+            HttpStatus.CREATED
+        )
+    }
+
+    override fun getUserByUsername(username: String): ResponseEntity<SuccessDTO<UserDTO>> {
         val user = userService.getUserByUsername(username)
         return ResponseEntity(
             SuccessDTO(
@@ -64,12 +66,12 @@ class UserController (
         userUpdate: UpdateUserDTO,
         pfp: MultipartFile?
     ): ResponseEntity<SuccessDTO<UserDTO>> {
-        val user = userService.updateUser(user, userUpdate, pfp)
+        val userDTO = userService.updateUser(user, userUpdate, pfp)
         return ResponseEntity(
             SuccessDTO(
                 status = HttpStatus.OK.value(),
                 message = "Usuario actualizado correctamente",
-                data = user
+                data = userDTO
             ),
             HttpStatus.OK
         )

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
+import java.util.*
 
 @RestController
 @RequestMapping("artists")
@@ -30,6 +31,30 @@ class ArtistController (private val artistService: ArtistService) : ArtistContro
                 data = artist
             ),
             HttpStatus.CREATED
+        )
+    }
+
+    override fun getArtist(user: AuthenticatedUser): ResponseEntity<SuccessDTO<ArtistDTO>> {
+        val artist = artistService.getArtist(user)
+        return ResponseEntity(
+            SuccessDTO(
+                status = HttpStatus.OK.value(),
+                message = "Artista obtenido correctamente",
+                data = artist
+            ),
+            HttpStatus.OK
+        )
+    }
+
+    override fun getArtistById(id: UUID): ResponseEntity<SuccessDTO<ArtistDTO>> {
+        val artist = artistService.getArtistById(id)
+        return ResponseEntity(
+            SuccessDTO(
+                status = HttpStatus.OK.value(),
+                message = "Artista obtenido correctamente",
+                data = artist
+            ),
+            HttpStatus.OK
         )
     }
 

@@ -4,6 +4,7 @@ data class RegistrationPayload(
     val username: String,
     val enabled: Boolean = true,
     val email: String,
+    val emailVerified: Boolean = true,
     val credentials: List<Credential>
 )
 

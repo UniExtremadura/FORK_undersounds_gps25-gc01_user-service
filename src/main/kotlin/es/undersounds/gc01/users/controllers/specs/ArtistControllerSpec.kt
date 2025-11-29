@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.multipart.MultipartFile
+import java.util.UUID
 
 @Tag(name = "Artistas", description = "Operaciones relacionadas con artistas. Actualización de perfil, gestión de información bancaria, etc.")
 interface ArtistControllerSpec  {
@@ -57,6 +58,41 @@ interface ArtistControllerSpec  {
 
     @Operation(
         summary = "Obtiene la información de un artista",
+        description = "Obtiene información pública de un artista por su token"
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "Artista obtenido correctamente"),
+            ApiResponse(
+                responseCode = "400",
+                description = "Error en los datos enviados",
+                content = [Content(schema = Schema(implementation = ErrorDTO::class))]
+            )
+        ]
+    )
+    @GetMapping
+    fun getArtist(@AuthenticationPrincipal user: AuthenticatedUser): ResponseEntity<SuccessDTO<ArtistDTO>>
+
+    @Operation(
+        summary = "Obtiene la información de un artista por su UUID. SOLO PARA CONSUMO INTERNO",
+        description = "Obtiene información pública de un artista por su UUID"
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "Artista obtenido correctamente"),
+            ApiResponse(
+                responseCode = "400",
+                description = "Error en los datos enviados",
+                content = [Content(schema = Schema(implementation = ErrorDTO::class))]
+            )
+        ]
+    )
+    @PreAuthorize("hasRole('internal_service')")
+    @GetMapping("/{id}")
+    fun getArtistById(@PathVariable id: UUID): ResponseEntity<SuccessDTO<ArtistDTO>>
+
+    @Operation(
+        summary = "Obtiene la información de un artista",
         description = "Obtiene información pública de un artista en base a su username"
     )
     @ApiResponses(
@@ -70,7 +106,7 @@ interface ArtistControllerSpec  {
         ]
     )
     @GetMapping("/public/{username}")
-    @PreAuthorize("hasRole('internal_service')")
+    //@PreAuthorize("hasRole('internal_service')")
     fun getArtistByUsername(
         @Parameter(description = "Nombre de usuario del artista a obtener", example = "JohnLennon")
         @PathVariable username: String

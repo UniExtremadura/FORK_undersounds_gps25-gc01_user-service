@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import java.util.UUID
 
 @Service
 class ArtistService(
@@ -52,9 +53,23 @@ class ArtistService(
         return dto
     }
 
+    fun getArtist(user: AuthenticatedUser): ArtistDTO {
+        val artist = artistRepository.findArtistByUserPublicId(user.id)
+            ?: throw NotFoundException("No se ha encontrado ningun artista con el UD ${user.id}")
+
+        return artist.toDTO()
+    }
+
     fun getArtistByUsername(username: String): ArtistDTO {
         val artist = artistRepository.findArtistByUserUsername(username)
             ?: throw NotFoundException("No se encontró a ningun artista con el username: $username")
+
+        return artist.toDTO()
+    }
+
+    fun getArtistById(id: UUID): ArtistDTO {
+        val artist = artistRepository.findArtistByUserPublicId(id)
+            ?: throw NotFoundException("No se encontró a ningún artista con el uuid: $id")
 
         return artist.toDTO()
     }

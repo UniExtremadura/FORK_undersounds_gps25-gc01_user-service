@@ -24,9 +24,9 @@ object UserUtils {
         return Paths.get(absolutePfpDir, user.pfp)
     }
 
-    fun createUserPfpName(user: User, coverName: String): String {
+    fun createUserPfpName(user: User, extension: String): String {
         val userId = user.publicId ?: throw RuntimeException("User must have public ID before creating profile picture name")
-        return userId.toString() + '.' + getExtension(coverName)
+        return "$userId.$extension"
     }
 
     fun createUserPfpURL(user: User) = ServletUriComponentsBuilder.fromCurrentContextPath()

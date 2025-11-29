@@ -14,7 +14,6 @@ import es.undersounds.gc01.users.repositories.UserRepository
 import es.undersounds.gc01.users.security.AuthenticatedUser
 import es.undersounds.gc01.users.security.JwtToAuthenticatedUserConverter
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.JwtDecoders
 import org.springframework.stereotype.Service
@@ -44,40 +43,42 @@ class UserService(
     }
 
     @Transactional
-    fun registerUser(user: CreateUserDTO, pfp: MultipartFile): UserCredentialsDTO {
-        val credentials = identityClient.register(user)
-            ?: throw RuntimeException("Unable to register user")
+    fun postUser(user: AuthenticatedUser, dto: CreateUserDTO, pfp: MultipartFile): UserDTO {
+        val prev = userRepository.findUserByPublicId(user.id)
 
-        val jwt: Jwt = decoder.decode(credentials.accessToken)
-        val authUser = converter.convert(jwt).principal as AuthenticatedUser
+        if(prev != null){
+            throw ForbiddenException("Ya has completado tu perfil")
+        }
 
         val userEntity = User(
-            publicId = authUser.id,
+            publicId = user.id,
             username = user.username,
-            firstName = user.firstName,
+            firstName = dto.firstName,
             email = user.email,
-            lastName = user.lastName,
-            bio = user.bio,
+            lastName = dto.lastName,
+            bio = dto.bio,
         )
 
         try {
             userMediaService.savePfp(userEntity, pfp)
-            userRepository.save(userEntity)
+            val saved = userRepository.save(userEntity)
 
-            return credentials
+            logger.info("User registered with ID: ${userEntity.publicId} and username: ${userEntity.username}")
+
+            return saved.toDTO()
         } catch (e: Exception) {
             userMediaService.deletePfp(userEntity)
-            identityClient.deleteUser(authUser.id)
 
             throw e
         }
     }
 
-    fun loginUser(user: LoginUserDTO): UserCredentialsDTO {
-        val credentials = identityClient.login(user.username, user.password)
-            ?: throw NotFoundException("User not found")
 
-        return credentials
+    fun getUser(user: AuthenticatedUser): UserDTO {
+        val user = userRepository.findUserByPublicId(user.id)
+            ?: throw NotFoundException("No se encontró a ningun usuario con el ID: ${user.id}")
+
+        return user.toDTO()
     }
 
     fun getUserByUsername(username: String): UserDTO {

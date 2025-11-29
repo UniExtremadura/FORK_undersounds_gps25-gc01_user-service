@@ -43,7 +43,7 @@ class SecurityConfig{
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers({ req -> req.requestURI.contains("public") }).permitAll()
-                    .requestMatchers( "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**").permitAll()
+                    .requestMatchers( "/media/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**").permitAll()
                     .anyRequest().authenticated()
             }
             .cors(Customizer.withDefaults())

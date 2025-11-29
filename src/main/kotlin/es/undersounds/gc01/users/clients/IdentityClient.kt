@@ -55,43 +55,6 @@ class IdentityClient {
         return credentials
     }
 
-    fun login(username: String, password: String): UserCredentialsDTO? {
-        val formData = LinkedMultiValueMap<String, String>()
-        formData.add("client_id", clientId)
-        formData.add("client_secret", clientSecret)
-        formData.add("grant_type", "password")
-        formData.add("username", username)
-        formData.add("password", password)
-
-        return WebClient.create("$baseUrl/realms/$realm/protocol/openid-connect/token")
-            .post()
-            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-            .body(BodyInserters.fromFormData(formData))
-            .retrieve()
-            .bodyToMono(UserCredentialsDTO::class.java)
-            .block()
-    }
-
-    fun register(user: CreateUserDTO): UserCredentialsDTO? {
-        val registrationPayload = RegistrationPayload(
-            username = user.username,
-            email = user.email,
-            credentials = listOf(Credential(value = user.password))
-        )
-
-        serviceToken = getServiceToken()
-        WebClient.create("$baseUrl/admin/realms/$realm/users")
-            .post()
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer ${serviceToken.accessToken}")
-            .bodyValue(registrationPayload)
-            .retrieve()
-            .toBodilessEntity()
-            .block()
-
-        return login(user.username, user.password)
-    }
-
     fun giveRolArtistToUser(userId: UUID) {
         serviceToken = getServiceToken()
         WebClient.create("$baseUrl/admin/realms/$realm/users/$userId/role-mappings/realm")
