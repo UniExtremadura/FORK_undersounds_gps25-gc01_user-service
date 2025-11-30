@@ -3,9 +3,7 @@ package es.undersounds.gc01.users.controllers.specs
 import es.undersounds.gc01.content.dtos.SuccessDTO
 import es.undersounds.gc01.content.dtos.ErrorDTO
 import es.undersounds.gc01.users.dtos.users.CreateUserDTO
-import es.undersounds.gc01.users.dtos.users.LoginUserDTO
 import es.undersounds.gc01.users.dtos.users.UpdateUserDTO
-import es.undersounds.gc01.users.dtos.users.UserCredentialsDTO
 import es.undersounds.gc01.users.dtos.users.UserDTO
 import es.undersounds.gc01.users.security.AuthenticatedUser
 import io.swagger.v3.oas.annotations.Operation
@@ -18,14 +16,12 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.multipart.MultipartFile
 
