@@ -13,6 +13,6 @@ class ArtistSpecs {
      * Especificación para filtrar artistas cuyo nombre contiene una cadena dada (sin distinción de mayúsculas/minúsculas).
      */
     fun nameContains(name: String) = Specification<Artist> { root, _, criteriaBuilder ->
-        criteriaBuilder.like(criteriaBuilder.lower(root.get("firstName")), "%${name.lowercase()}%")
+        criteriaBuilder.like(criteriaBuilder.lower(root["firstName"]), "%${name.lowercase()}%")
     }
 }
