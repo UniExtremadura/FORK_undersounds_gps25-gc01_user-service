@@ -17,6 +17,7 @@ sonar {
 
 val springdocVersion by extra("2.8.13")
 val springCloudVersion by extra("2025.0.0")
+val commonsIoVersion by extra("2.14.0")
 
 group = "es.undersounds.gc01"
 version = "0.0.1-SNAPSHOT"
@@ -59,7 +60,7 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic") 
      
     // Utilities
-    implementation("commons-io:commons-io:2.14.0")
+    implementation("commons-io:commons-io:$commonsIoVersion")
 
     // Development
     developmentOnly("org.springframework.boot:spring-boot-devtools")
