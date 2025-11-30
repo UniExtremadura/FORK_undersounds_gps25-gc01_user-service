@@ -51,7 +51,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
     implementation("org.slf4j:slf4j-api") 
     runtimeOnly("ch.qos.logback:logback-classic") 
-    developmentOnly("commons-io:commons-io:$commonsIoVersion")
+    implementation("commons-io:commons-io:$commonsIoVersion")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     // Testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
