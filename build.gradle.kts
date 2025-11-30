@@ -50,14 +50,14 @@ dependencies {
     // Kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-
+    
     // Documentation
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
-
+    
     // Logging
     implementation("org.slf4j:slf4j-api:2.0.9")
     runtimeOnly("ch.qos.logback:logback-classic:1.5.13")
-
+    
     // Utilities
     implementation("commons-io:commons-io:2.14.0")
 
