@@ -5,7 +5,6 @@ import jakarta.annotation.PostConstruct
 import java.io.File
 import java.nio.file.Path
 import java.nio.file.Paths
-import org.apache.commons.io.FilenameUtils.getExtension
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
