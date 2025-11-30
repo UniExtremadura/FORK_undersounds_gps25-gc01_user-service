@@ -14,6 +14,9 @@ import kotlin.text.startsWith
 
 @Service
 class UserMediaService {
+    // 💡 SOLUCIÓN: Lista blanca (Whitelist) de extensiones seguras
+    private val ALLOWED_IMAGE_EXTENSIONS = setOf("jpeg", "jpg", "png", "webp", "gif")
+    
     @Value("\${users.max-pfp-size}")
     private lateinit var maxPfpSize: Integer
 
@@ -31,9 +34,19 @@ class UserMediaService {
         if(pfp.originalFilename == null)
             throw BadRequestException("Profile picture must have a name")
 
-        val extension = pfp.contentType?.substringAfterLast('/')?.lowercase()
-            ?: throw BadRequestException("Profile picture must have a valid extension")
+        // 1. Extraer la extensión bruta del Content-Type
+        val rawExtension = pfp.contentType?.substringAfterLast('/')?.lowercase()
+             ?: throw BadRequestException("Profile picture must have a valid extension")
 
+        // 2. 🛡️ VALIDACIÓN DE SEGURIDAD: Asegurar que la extensión está en la lista blanca
+        val extension = if (rawExtension in ALLOWED_IMAGE_EXTENSIONS) {
+            rawExtension // Usar la extensión limpia y validada
+        } else {
+            // Lanza una excepción si el Content-Type es manipulado
+            throw BadRequestException("Profile picture has an invalid or disallowed extension.")
+        }
+        
+        // 3. Usar la extensión VALIDADA para construir la ruta
         val pfpName = createUserPfpName(user, extension)
 
         user.pfp = pfpName
@@ -52,7 +65,8 @@ class UserMediaService {
 
             val pfpPath = createUserPfpPath(user)
             deleteFile(pfpPath)
-            savePfp(user, pfp)
+            // savePfp ya contiene la lógica de validación de seguridad
+            savePfp(user, pfp) 
         }
     }
 
