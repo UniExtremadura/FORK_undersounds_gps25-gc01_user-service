@@ -34,32 +34,54 @@ repositories {
 }
 
 dependencies {
-    // Spring Boot Starters
+    // ----------------------------------------------------
+    // 1. DEPENDENCIAS DE IMPLEMENTACIÓN (COMPILACIÓN Y TIEMPO DE EJECUCIÓN)
+    // ----------------------------------------------------
+    
+    // Spring Boot Starters (Funcionalidad principal)
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-    // Spring Cloud
+    
+    // Spring Cloud (Descubrimiento de servicios)
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
-    // Database
-    runtimeOnly("com.mysql:mysql-connector-j")
-    // Others
+    
+    // Others (Kotlin, Documentación, Utilidades)
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
-    implementation("org.slf4j:slf4j-api") 
-    runtimeOnly("ch.qos.logback:logback-classic") 
+    implementation("org.slf4j:slf4j-api")
     implementation("commons-io:commons-io:$commonsIoVersion")
+
+    // ----------------------------------------------------
+    // 2. DEPENDENCIAS DE TIEMPO DE EJECUCIÓN (runtimeOnly)
+    // ----------------------------------------------------
+
+    // Database Driver
+    runtimeOnly("com.mysql:mysql-connector-j")
+    
+    // Logging Implementation
+    runtimeOnly("ch.qos.logback:logback-classic") 
+
+    // ----------------------------------------------------
+    // 3. DEPENDENCIAS DE DESARROLLO (developmentOnly)
+    // ----------------------------------------------------
+    
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    // Testing
+    
+    // ----------------------------------------------------
+    // 4. DEPENDENCIAS DE PRUEBAS (Testing)
+    // ----------------------------------------------------
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.security:spring-security-test")
+    
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
-
 
 kotlin {
     compilerOptions {
