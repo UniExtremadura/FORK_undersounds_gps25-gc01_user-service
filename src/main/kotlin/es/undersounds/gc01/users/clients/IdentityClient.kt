@@ -4,12 +4,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
-
 import es.undersounds.gc01.users.dtos.identity.ServiceCredentialsDTO
-import es.undersounds.gc01.users.dtos.users.CreateUserDTO
-import es.undersounds.gc01.users.dtos.identity.Credential
-import es.undersounds.gc01.users.dtos.identity.RegistrationPayload
-import es.undersounds.gc01.users.dtos.users.UserCredentialsDTO
 import jakarta.annotation.PostConstruct
 import org.springframework.stereotype.Service
 import org.springframework.util.LinkedMultiValueMap
