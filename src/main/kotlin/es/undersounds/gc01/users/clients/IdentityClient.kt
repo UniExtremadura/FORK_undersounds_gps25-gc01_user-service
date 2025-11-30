@@ -5,7 +5,6 @@ import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
 import es.undersounds.gc01.users.dtos.identity.ServiceCredentialsDTO
-import jakarta.annotation.PostConstruct
 import org.springframework.stereotype.Service
 import org.springframework.util.LinkedMultiValueMap
 import java.util.UUID
@@ -24,13 +23,11 @@ class IdentityClient {
     @Value("\${keycloak.realm}")
     private lateinit var realm: String
 
-    private lateinit var serviceToken: ServiceCredentialsDTO
-
-    @PostConstruct
-    private fun init() {
-        serviceToken = getServiceToken()
+    private val serviceToken: ServiceCredentialsDTO by lazy { 
+        getServiceToken()
     }
 
+ 
     private fun getServiceToken(): ServiceCredentialsDTO {
         val formData = LinkedMultiValueMap<String, String>()
         formData.add("grant_type", "client_credentials")
@@ -51,7 +48,6 @@ class IdentityClient {
     }
 
     fun giveRolArtistToUser(userId: UUID) {
-        serviceToken = getServiceToken()
         WebClient.create("$baseUrl/admin/realms/$realm/users/$userId/role-mappings/realm")
             .post()
             .contentType(MediaType.APPLICATION_JSON)
@@ -63,7 +59,6 @@ class IdentityClient {
     }
 
     fun unableUser(userId: UUID){
-        serviceToken = getServiceToken()
         WebClient.create("$baseUrl/admin/realms/$realm/users/$userId")
             .put()
             .contentType(MediaType.APPLICATION_JSON)
@@ -75,7 +70,6 @@ class IdentityClient {
     }
 
     fun deleteUser(userId: UUID) {
-        serviceToken = getServiceToken()
         WebClient.create("$baseUrl/admin/realms/$realm/users/$userId")
             .delete()
             .header("Authorization", "Bearer ${serviceToken.accessToken}")
