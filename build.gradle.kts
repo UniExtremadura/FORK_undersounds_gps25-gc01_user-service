@@ -33,38 +33,44 @@ repositories {
 }
 
 dependencies {
-    // SPRING
+    // Spring Boot Starters
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
-    runtimeOnly("com.mysql:mysql-connector-j")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    
+    // Spring Cloud
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+    
+    // Database
+    runtimeOnly("com.mysql:mysql-connector-j")
+    
+    // Kotlin
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-
-
-    // TESTS
+    
+    // Documentation
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
+    
+    // Logging
+    implementation("org.slf4j:slf4j-api:2.0.9")
+    runtimeOnly("ch.qos.logback:logback-classic:1.5.13")
+    
+    // Utilities
+    implementation("commons-io:commons-io:2.14.0")
+    
+    // Development
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    
+    // Testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.security:spring-security-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    // DOCS
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
-
-    // DEV
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.slf4j:slf4j-api:2.0.9")
-    runtimeOnly("ch.qos.logback:logback-classic:1.5.13")
-
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-
-    // UTIL
-    implementation("commons-io:commons-io:2.14.0")
 }
+
 
 kotlin {
     compilerOptions {
