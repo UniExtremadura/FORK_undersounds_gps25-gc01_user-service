@@ -4,7 +4,18 @@ plugins {
     id("org.springframework.boot") version "3.5.7"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "1.9.25"
+    id("org.sonarqube") version "7.1.0.6387"
 }
+ 
+
+sonar {
+  properties {
+    property("sonar.projectKey", "UniExtremadura_FORK_undersounds_gps25-gc01_user-service")
+    property("sonar.organization", "uniextremadura")
+  }
+}
+
+
 val springCloudVersion by extra("2025.0.0")
 
 group = "es.undersounds.gc01"
