@@ -3,9 +3,7 @@ package es.undersounds.gc01.users.controllers
 import es.undersounds.gc01.content.dtos.SuccessDTO
 import es.undersounds.gc01.users.controllers.specs.UserControllerSpec
 import es.undersounds.gc01.users.dtos.users.CreateUserDTO
-import es.undersounds.gc01.users.dtos.users.LoginUserDTO
 import es.undersounds.gc01.users.dtos.users.UpdateUserDTO
-import es.undersounds.gc01.users.dtos.users.UserCredentialsDTO
 import es.undersounds.gc01.users.dtos.users.UserDTO
 import es.undersounds.gc01.users.security.AuthenticatedUser
 import es.undersounds.gc01.users.services.UserService
