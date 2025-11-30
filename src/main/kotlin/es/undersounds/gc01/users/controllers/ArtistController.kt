@@ -39,7 +39,7 @@ class ArtistController (private val artistService: ArtistService) : ArtistContro
         return ResponseEntity(
             SuccessDTO(
                 status = HttpStatus.OK.value(),
-                message = "Artista obtenido correctamente",
+                message = "Artista obtenido correctamente (método getArtist)",
                 data = artist
             ),
             HttpStatus.OK
@@ -51,7 +51,7 @@ class ArtistController (private val artistService: ArtistService) : ArtistContro
         return ResponseEntity(
             SuccessDTO(
                 status = HttpStatus.OK.value(),
-                message = "Artista obtenido correctamente",
+                message = "Artista obtenido correctamente  (método getArtistById)",
                 data = artist
             ),
             HttpStatus.OK
@@ -63,7 +63,7 @@ class ArtistController (private val artistService: ArtistService) : ArtistContro
         return ResponseEntity(
             SuccessDTO(
                 status = HttpStatus.OK.value(),
-                message = "Artista obtenido correctamente",
+                message = "Artista obtenido correctamente (método getArtistByUsername)",
                 data = artist
             ),
             HttpStatus.OK
