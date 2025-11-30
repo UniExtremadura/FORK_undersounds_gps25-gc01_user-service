@@ -15,7 +15,7 @@ sonar {
   }
 }
 
-
+val springdocVersion by extra("2.8.13")
 val springCloudVersion by extra("2025.0.0")
 
 group = "es.undersounds.gc01"
@@ -52,7 +52,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     // Documentation
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui") 
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
      
     // Logging
     implementation("org.slf4j:slf4j-api") 
