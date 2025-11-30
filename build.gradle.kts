@@ -45,17 +45,13 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     // Database
     runtimeOnly("com.mysql:mysql-connector-j")
-    // Kotlin
+    // Others
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    // Documentation
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
-    // Logging
     implementation("org.slf4j:slf4j-api") 
     runtimeOnly("ch.qos.logback:logback-classic") 
-    // Utilities
     implementation("commons-io:commons-io:$commonsIoVersion")
-    // Development
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     // Testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
