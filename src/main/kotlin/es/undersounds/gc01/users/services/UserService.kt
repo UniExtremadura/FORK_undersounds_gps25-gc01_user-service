@@ -3,9 +3,7 @@ package es.undersounds.gc01.users.services
 import es.undersounds.gc01.users.clients.IdentityClient
 import es.undersounds.gc01.users.dtos.users.CreateUserDTO
 import es.undersounds.gc01.users.dtos.users.UserDTO
-import es.undersounds.gc01.users.dtos.users.LoginUserDTO
 import es.undersounds.gc01.users.dtos.users.UpdateUserDTO
-import es.undersounds.gc01.users.dtos.users.UserCredentialsDTO
 import es.undersounds.gc01.users.entities.User
 import es.undersounds.gc01.users.exceptions.ForbiddenException
 import es.undersounds.gc01.users.exceptions.NotFoundException
