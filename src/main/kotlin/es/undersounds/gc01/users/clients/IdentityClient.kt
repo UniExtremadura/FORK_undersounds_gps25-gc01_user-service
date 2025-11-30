@@ -23,12 +23,15 @@ class IdentityClient {
     @Value("\${keycloak.realm}")
     private lateinit var realm: String
 
+    // CORRECCIÓN CLAVE 1: La propiedad serviceToken usa el bloque 'lazy'
     private val serviceToken: ServiceCredentialsDTO by lazy { 
-        getServiceToken()
+        // Llama a la función renombrada para evitar colisión de firma Java.
+        fetchServiceToken() 
     }
 
- 
-    private fun getServiceToken(): ServiceCredentialsDTO {
+    // CORRECCIÓN CLAVE 2: La función que calcula el token ha sido renombrada
+    // de getServiceToken() a fetchServiceToken().
+    private fun fetchServiceToken(): ServiceCredentialsDTO {
         val formData = LinkedMultiValueMap<String, String>()
         formData.add("grant_type", "client_credentials")
         formData.add("client_id", clientId)
